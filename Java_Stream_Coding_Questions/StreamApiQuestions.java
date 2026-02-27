@@ -1263,7 +1263,106 @@ public class StreamApiQuestions{
 		System.out.println("Transform list into custom DTO using map(): "+empDto);
 		
 		
+		/*
+		101.Retrieve Employee whose department is HR.
+		*/
 		
+		List<Employee> retrieveempdepthr = employees.stream()
+													.filter(emp->emp.getDepartment().equals("HR"))
+													.collect(Collectors.toList());
+													
+		System.out.println("Retrieve Employee whose department is HR: "+retrieveempdepthr);
+		
+		/*
+		102.Implement Min and Max functions on an Integer array using the Java Stream API.
+		*/
+		
+		Integer[] arrnumbers = {10, 5, 20, 8, 30};
+		
+		int minvalue = Arrays.stream(arrnumbers)
+						.mapToInt(Integer::intValue)
+						.min()
+						.orElseThrow();
+
+		int maxvalue = Arrays.stream(arrnumbers)
+						.mapToInt(Integer::intValue)
+						.max()
+						.orElseThrow();
+
+		System.out.println("Min: " + minvalue);
+		System.out.println("Max: " + maxvalue);
+		
+		
+		/*
+		103.How would you find the sum of the squares of all even numbers in a list using Java 8 streams
+		*/
+		
+		List<Integer> sumofsquare = numbers.stream()
+										   .filter(n->n%2==0)
+										   .map(n->n*n)
+										   .collect(Collectors.toList());
+										   
+		System.out.println("Sum of the Square of all even numbers: "+sumofsquare);
+		
+		
+		/*
+		104.Given a list of employees, how would you find the average salary by age range (e.g., 18-25) using Java 8 streams?
+		*/
+		
+		double averagesalaryagerange = employees.stream()
+												.filter(e->e.getAge()>=18 && e.getAge()<=25)
+												.collect(Collectors.averagingDouble(Employee::getSalary));
+		
+		System.out.println("Average salary by age range: "+averagesalaryagerange);
+		
+		
+		/*
+		105.Given a list of employees, how would you accomplish the following using Java streams: group employees by salary, find the maximum or minimum salary in each department, calculate the sum of salaries in each department, print all employees belonging to a specific department, and count the number of employees in a particular group?
+		*/
+		
+		Map<Double,List<Employee>> empbysalary = employees.stream()
+											  .collect(Collectors.groupingBy(Employee::getSalary));
+											  
+		System.out.println("Employee by salary: "+empbysalary);
+		
+		
+		Map<String, Double> deptMaxSalary = employees.stream()
+													 .collect(Collectors.groupingBy(
+														Employee::getDepartment,
+														Collectors.collectingAndThen(
+															Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary)),
+															opt -> opt.map(Employee::getSalary).orElse(0.0)
+                )
+        ));
+
+		System.out.println("Maximum Salary in each departement: "+deptMaxSalary);
+		
+		
+		Map<String, Double> deptMinSalary = employees.stream()
+													 .collect(Collectors.groupingBy(
+														Employee::getDepartment,
+														Collectors.collectingAndThen(
+															Collectors.minBy(Comparator.comparingDouble(Employee::getSalary)),
+															opt -> opt.map(Employee::getSalary).orElse(0.0)
+                )
+        ));
+
+		System.out.println("Minimum Salary in each departement: "+deptMinSalary);
+		
+		Map<String, Double> sumofsalarydept = employees.stream()
+													   .collect(Collectors.groupingBy(
+															Employee::getDepartment,
+															Collectors.summingDouble(Employee::getSalary)
+													   ));
+													   
+		System.out.println("Sum of Salary in each departement: "+sumofsalarydept);
+		
+		List<Employee> employeebelongsto = employees.stream()
+													.filter(emp->emp.getDepartment().equals("HR"))
+													.collect(Collectors.toList());
+												 
+		System.out.println("Employee belongs to: "+employeebelongsto);
+		System.out.println("Employee count: "+employeebelongsto.size());
 	}
 }
 
