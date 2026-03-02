@@ -1374,6 +1374,8 @@ class Employee {
 		private String email;
 		private long mobileno;
 		private int age;
+		private String gender;
+		
 	
 		// Constructor
 		public Employee(int id, String name, String department, double salary, String email, long mobileno, int age) {
@@ -1384,6 +1386,18 @@ class Employee {
 			this.email = email;
 			this.mobileno = mobileno;
 			this.age=age;
+		}
+		
+		// Constructor
+		public Employee(int id, String name, String department, double salary, String email, long mobileno, int age,String gender) {
+			this.id = id;
+			this.name = name;
+			this.department = department;
+			this.salary = salary;
+			this.email = email;
+			this.mobileno = mobileno;
+			this.age=age;
+			this.gender=gender;
 		}
 	
 		// Getters and Setters
@@ -1407,6 +1421,9 @@ class Employee {
 		
 		public int getAge() { return age; }
 		public void setAge(int age) { this.age = age; }
+		
+		public String getGender() { return gender; }
+		public void setGender(String gender) { this.gender = gender; }
 	
 		// toString method
 		@Override
@@ -1419,6 +1436,7 @@ class Employee {
 					", email='" + email + '\'' +
 					", mobileno=" + mobileno +
 					", age=" + age +
+					", gender=" + gender +
 					'}';
 		}
 }		
