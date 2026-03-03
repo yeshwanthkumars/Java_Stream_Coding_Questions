@@ -7,7 +7,7 @@ public class StreamAPITest{
 	public static void main(String args[]){
 		
 		
-		List<Integer> numbers = Arrays.asList(10, 20, 10, 30, 40, 20, 50);
+		List<Integer> numbers = Arrays.asList(10, 20, 10, 30, 40, 20, 50,33,44,55);
 		List<String> names = Arrays.asList("Arun", "Bala", "Anu", "David", "Ajay");
 		List<Integer> numbers1 = Arrays.asList(5, 1, 9, 3, 14, 9, 7);
 		List<String> words = Arrays.asList("apple", "bat", "car", "elephant", "dog");
@@ -26,6 +26,8 @@ public class StreamAPITest{
 										Arrays.asList(5, 6, 7)
 		);
 		
+		List<String> stringelement = Arrays.asList("A", "B", "A", "C", "D","B","C","F","G","I","C","D","A","R","Z","W");
+		List<Integer> numberselement = Arrays.asList(10, 20, 10, 30, 40, 20, 50,10,30,40,50,1,3,4,5,7,3,8,12,4,3,2,9,40,3,3);
 		
 	
 		//Date: 02/03/2026
@@ -88,6 +90,121 @@ public class StreamAPITest{
 																	Collectors.averagingDouble(Employee::getSalary)
 																)
 															)));
+		
+		//03-03-2026
+		
+		//11. Return a list conitaing only even numbers from a list of intergers.
+		
+		System.out.println("11. "+numbers.stream().filter(n->n%2==0).toList());
+		
+		//12. Find the maximum value in a list of intergers
+		
+		System.out.println("12. "+numbers.stream().max(Integer::compare));
+		System.out.println("12. "+numbers.stream().sorted(Comparator.reverseOrder()).findFirst());
+		System.out.println("12. "+numbers.stream().max(Comparator.comparing(Integer::intValue)));
+		
+		//13. Convert list of string to upper case
+		
+		System.out.println("13. "+words.stream().map(String::toUpperCase).toList());
+		
+		//14. Filter strings starting with the letter A using java 8
+		
+		System.out.println("13. "+names.stream().filter(a->a.startsWith("A")).toList());
+		
+		//15. Remove Duplicates from the list using java 8
+		
+		System.out.println("14. "+numbers.stream().distinct().toList());
+		
+		//16. Sort a list of integers in ascending order
+		
+		System.out.println("15. "+numbers1.stream().sorted().toList());
+		
+		
+		//17. Sort a list of integers in descending order
+		
+		System.out.println("15. "+numbers1.stream().sorted(Comparator.reverseOrder()).toList());
+		
+		//18. Count the number of strings with elength greater thatn 3 using java 8.
+		
+		System.out.println("16. "+names.stream().filter(s->s.length()>3).count());
+		
+		//19. Join a list of string with a comma using java 8
+		
+		System.out.println("17. "+names.stream().collect(Collectors.joining(", ")));
+		
+		//20. Convert list of integers to set using java 8
+		
+		System.out.println("18. "+numbers.stream().collect(Collectors.toSet()));
+		
+		//21. Find the first element of a list using java 8
+		
+		System.out.println("19. "+numbers.stream().findFirst());
+		System.out.println("19. "+names.stream().findFirst());
+		
+		//22. Find sum of all integers in a list
+		
+		System.out.println("20. "+numbers.stream().mapToInt(Integer::intValue).sum());
+		System.out.println("20. "+numbers.stream().collect(Collectors.summingInt(n->n)));
+		
+		
+		//23. Count elements in a list that are greater than 5
+		
+		System.out.println("23. "+numberselement.stream().filter(n->n>5).count());
+		
+		//24. Retrieve all distinct elements from a list
+		
+		System.out.println("24. "+numbers.stream().distinct().toList());
+		
+		//25. skip the first two elements of a list and return the rest.
+		
+		System.out.println("25. "+numbers.stream().skip(2).toList());
+		
+		//26. Group elements by a specific property such as age.
+		
+		System.out.println("26. "+employees.stream().collect(Collectors.groupingBy(Employee::getAge)));
+		
+		//27. Find the lowest and highest number in a stream using summary statictics
+		
+		IntSummaryStatistics stats = numbers.stream()
+                                            .mapToInt(Integer::intValue)
+                                            .summaryStatistics();
+
+        System.out.println("27. Lowest number: " + stats.getMin());
+        System.out.println("27. Highest number: " + stats.getMax());
+		
+		//28. Create a Map of even and odd numbers using stream.
+		
+		System.out.println("28.  "+numbers.stream().collect(Collectors.groupingBy(
+															n->n%2==0 ? "Even" : "Odd"
+														)));
+		
+		//29.Find the Nth highest salary or age from a List
+		
+		System.out.println("29. "+employees.stream()
+										   .map(Employee::getSalary)
+								           .distinct()
+								           .sorted(Comparator.reverseOrder())
+								           .skip(2)
+								           .findFirst());
+										   
+		System.out.println("29. "+employees.stream()
+										   .map(Employee::getAge)
+								           .distinct()
+								           .sorted(Comparator.reverseOrder())
+								           .skip(2)
+								           .findFirst());
+		
+		
+		//30. Sort employees by name, age or salary using comparator and lambdas
+		
+		System.out.println("30. "+employees.stream().sorted(Comparator.comparing(Employee::getName)).toList());
+		
+		
+		
+		//31. Filter employees based on department, experience or salary range
+		
+		System.out.println("31. "+employees.stream().filter(e -> e.getDepartment().equalsIgnoreCase("IT")).toList());
+		System.out.println("31. "+employees.stream().filter(e -> e.getSalary() >= 30000 && e.getSalary() <= 60000).toList());
 		
 		
 		
