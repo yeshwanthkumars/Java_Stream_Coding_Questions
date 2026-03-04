@@ -29,6 +29,13 @@ public class StreamAPITest{
 		List<String> stringelement = Arrays.asList("A", "B", "A", "C", "D","B","C","F","G","I","C","D","A","R","Z","W");
 		List<Integer> numberselement = Arrays.asList(10, 20, 10, 30, 40, 20, 50,10,30,40,50,1,3,4,5,7,3,8,12,4,3,2,9,40,3,3);
 		
+		int[] arr = {1,2,3,4,5};
+		int[] arr1 = {10, 5, 20, 8, 15};
+		int[] arr2 = {2,5,8,11,14,17};
+		int[] duparray = {1,2,2,3,4,4,5};
+		int[] sortarray = {7,2,9,1,5};
+		int[] missingarray = {2,3,1,6,4};
+		
 	
 		//Date: 02/03/2026
 		
@@ -207,7 +214,125 @@ public class StreamAPITest{
 		System.out.println("31. "+employees.stream().filter(e -> e.getSalary() >= 30000 && e.getSalary() <= 60000).toList());
 		
 		
+		//04-03-2026
 		
+		//31. Sum of Array Elements
+		
+		System.out.println("31. "+Arrays.stream(arr).sum());
+		
+		//32.Find Maximum Element
+		
+		System.out.println("32 "+Arrays.stream(arr).max());
+		
+		//33.Find Minimum Element
+		
+		System.out.println("33 "+Arrays.stream(arr).min());
+		
+		//34.Count Even Numbers
+		
+		System.out.println("34 "+Arrays.stream(arr1).filter(n->n%2==0).count());
+		
+		//35.Square Each Element
+		
+		
+		System.out.println("35. " +Arrays.toString(
+											Arrays.stream(arr)
+												  .map(n -> n * n)
+												  .toArray()
+											)
+						  );
+						  
+		//36. Remove Duplicates
+		
+		System.out.println("36. "+Arrays.toString(
+											Arrays.stream(duparray).distinct().toArray()
+						
+						  ));
 	
+		//37. Sort Array Ascending
+		
+		System.out.println("37. "+Arrays.stream(arr2).boxed().sorted().toList());
+		
+		//38.Sort Array Descending
+		
+		System.out.println("38. "+Arrays.stream(arr2).boxed().sorted(Comparator.reverseOrder()).toList());
+		
+		//39.Find Second Largest Number
+		
+		System.out.println("39. "+Arrays.stream(arr1).boxed().sorted(Comparator.reverseOrder()).skip(1).findFirst());
+		
+		//40.Find Sum of Even Numbers
+		
+		System.out.println("40. "+Arrays.stream(arr).filter(n->n%2==0).sum());
+		
+		//41.Find Average of Numbers
+		
+		System.out.println("41. "+Arrays.stream(arr).average());
+		
+		//42.Find Numbers Greater Than 10
+		
+		System.out.println("42. "+Arrays.toString(Arrays.stream(arr1).filter(n->n>10).toArray()));
+
+		//43.Find First Element Greater Than 10
+		
+		System.out.println("43. "+Arrays.stream(arr1).filter(n->n>10).findFirst());
+		
+		//44.Convert int[] → List<Integer>
+		
+		System.out.println("44. "+Arrays.stream(arr1).boxed().toList());
+		System.out.println("44. "+Arrays.stream(arr1).boxed().collect(Collectors.toList()));
+		
+		//45.Find Top 3 Largest Numbers
+		
+		System.out.println("45. "+Arrays.stream(arr1).boxed().sorted(Comparator.reverseOrder()).limit(3).toList());
+		
+		//46.Partition Even and Odd
+		
+		System.out.println("46. "+Arrays.stream(arr2).boxed().collect(Collectors.groupingBy(
+																			n->n%2==0 ? "Even" :"Odd")));
+																			
+		//47.Find Duplicate Numbers
+
+		System.out.println("47. "+Arrays.stream(duparray).boxed()
+														.collect(Collectors.groupingBy(
+																n->n,
+																Collectors.counting()
+														))
+														.entrySet().stream()
+														.filter(e->e.getValue()>1)
+														.map(Map.Entry::getKey)
+														.toList()
+						  );
+						  
+		//48.Find Missing Number
+		
+		Set<Integer> set = Arrays.stream(missingarray).boxed().collect(Collectors.toSet());
+		
+		System.out.println("48. "+IntStream.rangeClosed(1,6).filter(i-> !set.contains(i)).boxed().toList());
+		
+		
+		
+		//49.Find Frequency of Elements
+		
+		System.out.println("49. "+Arrays.stream(duparray).boxed()
+														.collect(Collectors.groupingBy(
+																n->n,
+																Collectors.counting()
+														))
+												
+						  );
+		
+		//50.Find First Non-Repeating Element
+		
+		System.out.println("50. "+Arrays.stream(duparray).boxed()
+														.collect(Collectors.groupingBy(
+																n->n,
+																Collectors.counting()
+														))
+														.entrySet().stream()
+														.filter(e->e.getValue()==1)
+														.map(Map.Entry::getKey)
+														.findFirst()
+						  );
 	}
 }
