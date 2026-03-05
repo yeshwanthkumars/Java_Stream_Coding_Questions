@@ -10,7 +10,7 @@ public class StreamAPITest{
 		List<Integer> numbers = Arrays.asList(10, 20, 10, 30, 40, 20, 50,33,44,55);
 		List<String> names = Arrays.asList("Arun", "Bala", "Anu", "David", "Ajay");
 		List<Integer> numbers1 = Arrays.asList(5, 1, 9, 3, 14, 9, 7);
-		List<String> words = Arrays.asList("apple", "bat", "car", "elephant", "dog");
+		List<String> words = Arrays.asList("apple", "bat", "car", "elephant", "dog","app","cat","flower","goat");
 		String input = "java stream";
 		List<Employee> employees = Arrays.asList(
                 new Employee(101, "Alice", "IT", 75000, "alice@example.com", 9876543210L,34,"Male"),
@@ -35,6 +35,9 @@ public class StreamAPITest{
 		int[] duparray = {1,2,2,3,4,4,5};
 		int[] sortarray = {7,2,9,1,5};
 		int[] missingarray = {2,3,1,6,4};
+		int[] rangenos = {5,12,18,50,65,42,33};
+		int[] oddfreq = {1,2,3,2,3,1,3,4,4};
+		String[] arraywords ={"apple", "bat", "car", "elephant", "dog","app","cat","flower","goat"};
 		
 	
 		//Date: 02/03/2026
@@ -259,7 +262,7 @@ public class StreamAPITest{
 		
 		//39.Find Second Largest Number
 		
-		System.out.println("39. "+Arrays.stream(arr1).boxed().sorted(Comparator.reverseOrder()).skip(1).findFirst());
+		System.out.println("39. "+Arrays.stream(arr1).distinct().boxed().sorted(Comparator.reverseOrder()).skip(1).findFirst());
 		
 		//40.Find Sum of Even Numbers
 		
@@ -284,7 +287,7 @@ public class StreamAPITest{
 		
 		//45.Find Top 3 Largest Numbers
 		
-		System.out.println("45. "+Arrays.stream(arr1).boxed().sorted(Comparator.reverseOrder()).limit(3).toList());
+		System.out.println("45. "+Arrays.stream(arr1).distinct().boxed().sorted(Comparator.reverseOrder()).limit(3).toList());
 		
 		//46.Partition Even and Odd
 		
@@ -327,6 +330,7 @@ public class StreamAPITest{
 		System.out.println("50. "+Arrays.stream(duparray).boxed()
 														.collect(Collectors.groupingBy(
 																n->n,
+																LinkedHashMap::new,
 																Collectors.counting()
 														))
 														.entrySet().stream()
@@ -334,5 +338,94 @@ public class StreamAPITest{
 														.map(Map.Entry::getKey)
 														.findFirst()
 						  );
+						  
+		//05-03-2026
+		
+		//51.Find All Numbers Appearing More Than Once
+		
+		System.out.println("51. "+Arrays.stream(duparray).boxed()
+														.collect(Collectors.groupingBy(
+																n->n,
+																LinkedHashMap::new,
+																Collectors.counting()
+														))
+														.entrySet().stream()
+														.filter(e->e.getValue()>1)
+														.map(Map.Entry::getKey)
+														.toList()
+						  );
+		
+		//52.Find Sum of Squares of Even Numbers
+		
+		System.out.println("52. "+Arrays.stream(arr1).filter(n->n%2==0).map(n->n*n).sum());
+		
+		//53.Find Numbers Between Range (10–50)
+		
+		System.out.println("53. "+Arrays.stream(rangenos).boxed().filter(n-> n>=10 && n<=50).toList());
+		
+		
+		//54.Find the Product of All Elements
+		
+		System.out.println("54. "+Arrays.stream(arr).reduce(1,(a,b) -> a*b));
+		
+		//55.Find Numbers Divisible by 3 and 5
+		
+		System.out.println("55. "+Arrays.stream(rangenos).filter(n->n%3==0 && n%5==0).boxed().toList());
+		System.out.println("55. "+Arrays.stream(rangenos).boxed().collect(Collectors.partitioningBy(n -> n % 3 == 0 && n % 5 == 0)));
+		System.out.println("55. "+Arrays.stream(rangenos)
+										.boxed()
+										.collect(Collectors.groupingBy(n -> {
+											if (n % 3 == 0 && n % 5 == 0) return "Divisible by 3 and 5";
+											else if (n % 3 == 0) return "Divisible by 3";
+											else if (n % 5 == 0) return "Divisible by 5";
+											else return "Others";
+										})));
+		
+		//56. Find Numbers With Odd Frequency
+		
+		System.out.println("56. "+Arrays.stream(oddfreq).boxed()
+														.collect(Collectors.groupingBy(
+																n->n,
+																LinkedHashMap::new,
+																Collectors.counting()
+														))
+														.entrySet().stream()
+														.filter(e->e.getValue()%2!=0)
+														.map(Map.Entry::getKey)
+														.toList()
+						  );
+		
+		//57.Find Sum of Unique Elements Only
+		
+		System.out.println("57. "+Arrays.stream(duparray).boxed()
+														.collect(Collectors.groupingBy(
+																n->n,
+																LinkedHashMap::new,
+																Collectors.counting()
+														))
+														.entrySet().stream()
+														.filter(e->e.getValue()==1)
+														.map(Map.Entry::getKey)
+														.mapToInt(Integer::intValue)
+														.sum()
+						  );
+		
+		//58.Find all employees whose names contain the letter ‘a’ (case-insensitive) and sort them by salary descending.
+		
+		System.out.println("58. "+employees.stream().filter(e->e.getName().toLowerCase().startsWith("a"))
+												    .sorted(Comparator.comparing(Employee::getSalary).reversed())
+													.toList()					
+						  );
+						  
+		//59.Find the sum of squares of all odd numbers in a list of integers.
+		
+		System.out.println("59. "+Arrays.stream(arr1).filter(n->n%2!=0).map(n->n*n).sum());
+		
+		//60.Group words by their first character and count how many words start with each letter.
+		
+		System.out.println("60. "+Arrays.stream(arraywords).collect(Collectors.groupingBy(e->e.charAt(0),Collectors.counting())));
+		
+		
+		
 	}
 }
