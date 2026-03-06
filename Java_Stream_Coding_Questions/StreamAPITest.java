@@ -38,6 +38,8 @@ public class StreamAPITest{
 		int[] rangenos = {5,12,18,50,65,42,33};
 		int[] oddfreq = {1,2,3,2,3,1,3,4,4};
 		String[] arraywords ={"apple", "bat", "car", "elephant", "dog","app","cat","flower","goat"};
+		String[] dupstringarr = {"apple","banana","apple","orange","banana","grape"};
+		String[] highestarr = {"java","springboot","microservices","api"};
 		
 	
 		//Date: 02/03/2026
@@ -424,6 +426,76 @@ public class StreamAPITest{
 		//60.Group words by their first character and count how many words start with each letter.
 		
 		System.out.println("60. "+Arrays.stream(arraywords).collect(Collectors.groupingBy(e->e.charAt(0),Collectors.counting())));
+		
+		
+		//06-03-2026
+		
+		//61.Find Duplicate Words
+		
+		System.out.println("61. "+Arrays.stream(dupstringarr)
+														.collect(Collectors.groupingBy(
+																n->n,
+																LinkedHashMap::new,
+																Collectors.counting()
+														))
+														.entrySet().stream()
+														.filter(e->e.getValue()>1)
+														.map(Map.Entry::getKey)
+														.toList()
+						  );
+						  
+		//62. Count Words Starting With a Vowel
+		
+		System.out.println("62. "+Arrays.stream(dupstringarr).filter(word->{
+															char ch = Character.toLowerCase(word.charAt(0));
+															return ch=='a' || ch=='e' || ch=='i' || ch=='o' || ch=='u';
+															})
+															.count());
+															
+		//63.Convert All Words to Uppercase
+		
+		System.out.println("63. "+Arrays.stream(dupstringarr).map(String::toUpperCase).toList());
+		
+		//64.Find Longest Word
+		
+		System.out.println("64. "+Arrays.stream(highestarr).max(Comparator.comparing(String::length)));
+		
+		//65.Group Words by Length
+		
+		System.out.println("65. "+Arrays.stream(highestarr).collect(Collectors.groupingBy(String::length)));
+		
+		//66.Find Frequency of Each Word
+		
+		System.out.println("66. "+Arrays.stream(highestarr).collect(Collectors.groupingBy(
+																	n->n,
+																	Collectors.counting()
+																	))
+																	);
+																	
+		//67.Find First Non-Repeating Word
+
+		System.out.println("67. "+Arrays.stream(dupstringarr).collect(Collectors.groupingBy(
+																		n->n,
+																		LinkedHashMap::new,
+																		Collectors.counting()
+																	 ))
+																	 .entrySet().stream()
+																	 .filter(e->e.getValue()==1)
+																	 .map(Map.Entry::getKey)
+																	 .findFirst()
+																	 );
+																	 
+		//68.Flatten Words Into Characters
+		
+		System.out.println("68. "+Arrays.stream(highestarr).flatMap(word -> word.chars().mapToObj(c -> (char) c)).toList());
+		
+		//69.Find Top 2 Longest Words
+		
+		System.out.println("69. "+Arrays.stream(highestarr).sorted(Comparator.comparing(String::length).reversed()).limit(2).toList());
+		
+		//70.Join Words With Comma
+		
+		System.out.println("70. "+Arrays.stream(highestarr).collect(Collectors.joining(",")));
 		
 		
 		
