@@ -40,6 +40,7 @@ public class StreamAPITest{
 		String[] arraywords ={"apple", "bat", "car", "elephant", "dog","app","cat","flower","goat"};
 		String[] dupstringarr = {"apple","banana","apple","orange","banana","grape"};
 		String[] highestarr = {"java","springboot","microservices","api"};
+		String[] palindrome = {"level","java","madam","stream","racecar"};
 		
 	
 		//Date: 02/03/2026
@@ -472,7 +473,7 @@ public class StreamAPITest{
 																	))
 																	);
 																	
-		//67.Find First Non-Repeating Word
+		//67.Find First Non-Repeating Worddz
 
 		System.out.println("67. "+Arrays.stream(dupstringarr).collect(Collectors.groupingBy(
 																		n->n,
@@ -498,6 +499,61 @@ public class StreamAPITest{
 		System.out.println("70. "+Arrays.stream(highestarr).collect(Collectors.joining(",")));
 		
 		
+		//07-03-2026
+		
+		//71.Reverse Each Word in String Array
+		
+		System.out.println("71. "+Arrays.stream(highestarr).map(e -> new StringBuilder(e).reverse()).toList());
+		
+		//72.Find Words Ending With a Specific Letter
+		
+		System.out.println("71. "+Arrays.stream(highestarr).filter(e->e.toLowerCase().endsWith("a")).toList());
+		
+		//73.Count Total Characters in All Words
+		
+		System.out.println("73. "+Arrays.stream(highestarr).flatMap(word -> word.chars().mapToObj(c -> (char) c)).count());
+		
+		//74.Find Words Having Length Between 4 and 6
+		
+		System.out.println("74. "+Arrays.stream(highestarr).filter(word->word.length()>=4 && word.length()<=6).toList());
+	
+		//75.Sort Words by Length (Shortest → Longest)
+		
+		System.out.println("75. "+Arrays.stream(highestarr).sorted(Comparator.comparing(String::length)).toList());
+		
+		//76.Find Anagram Groups
+		
+		
+		//77.Find Words That Are Palindromes
+		
+		System.out.println("77. "+Arrays.stream(palindrome).filter(word -> word.equals(new StringBuilder(word).reverse().toString())).toList());
+		
+		
+		//78.Find Most Frequent Word
+		
+		System.out.println("78. "+Arrays.stream(dupstringarr).collect(Collectors.groupingBy(
+																		n->n,
+																		LinkedHashMap::new,
+																		Collectors.counting()
+																	 ))
+																	 .entrySet().stream()
+																	 .max(Map.Entry.comparingByValue())
+																	 .get()
+																	 .getKey()
+																	 );
+		
+		
+		//79.Find Words Containing Only Unique Characters
+		
+		System.out.println("79. "+Arrays.stream(highestarr).filter(word -> word.chars().distinct().count() == word.length()).toList());
+		
+		//80.Find Word With Maximum Number of Vowels
+		
+		System.out.println("80. "+Arrays.stream(highestarr).max(Comparator.comparingInt(word ->(int) word.toLowerCase()
+													  .chars()
+													  .filter(c -> "aeiou".indexOf(c) != -1)
+													  .count()))
+													  .get());				                 
 		
 	}
 }
