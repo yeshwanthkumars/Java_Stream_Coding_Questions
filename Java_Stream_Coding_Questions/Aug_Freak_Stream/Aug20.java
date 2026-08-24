@@ -122,6 +122,12 @@ class Employee{
 		this.salary = salary;
 	}
 	
+	public Employee(int id, String name, String department){
+		this.id = id;
+		this.name = name;
+		this.city = city;
+	}
+	
 	public void setId(int id){
 		this.id=id;
 	}
